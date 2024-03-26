@@ -10,10 +10,24 @@
     <!-- google font -->
       <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100" rel="stylesheet" />
     <title>Hello, world!</title>
+      <style>
+          .box {
+            width: 150px;
+            height: 150px;
+            border-radius: 70%;
+            overflow: hidden;
+          }
+          .profile {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+          }
+
+      </style>
   </head>
   <body>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid" style="justify-content: space-between">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary" style="position: fixed;width: 100%;background: white">
+  <div class="container-fluid" style="justify-content: space-between ;flex-wrap: nowrap;min-width: 700px" >
 
       <a class="navbar-brand" href="#"><img style="width: 100px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMaJr0B21N0SLLrMF7rpIEc51oXfIxOTe4ZQ&usqp=CAU"> </a>
       <input class="form-control me-2" style="width: 400px" type="search" placeholder="Search" aria-label="Search">
@@ -27,7 +41,60 @@
       </div>
 
     </div>
+
   </div>
+
 </nav>
+  <div style="display: flex ;flex-direction: row; justify-content: center ; text-align: center;padding-top:60px;background: #FAFAFA">
+          <div style="min-width: 500px;height: 1000px ; margin-right: 300px">
+              <div style="border: solid 1px lightgray;background: white">
+                  <div style="display: flex ; flex-direction: row; align-items: center ">
+                      <div class="box" style="width: 60px ; height: 60px;margin:0 20px">
+                        <img class="profile" src="https://i.namu.wiki/i/TYxKQDnuwFOcxdSaPR-L81SPQGf5aPEz13tINJ-Z508LKNtGmRmkZTKKEN82SrIZAYoLL8WSbXGzv2PiLgpRSg.webp">
+                      </div>
+                      <div>
+                          IU
+                      </div>
+                  </div>
+
+                  <div>
+                      <img style="width: 100%" src="https://file3.instiz.net/data/file3/2021/05/31/d/d/b/ddbc79bb11d67f68b0b269c2fefa4771.png">
+                  </div>
+                  <div style="display: flex; flex-direction: row; justify-content:space-between;margin: 0 20px">
+                      <div>
+                          <span class="material-symbols-outlined">favorite</span>
+                          <span class="material-symbols-outlined">mode_comment</span>
+                          <span class="material-symbols-outlined">send</span>
+                      </div>
+                      <div>
+                          <span class="material-symbols-outlined">bookmark</span>
+                      </div>
+                  </div>
+                  <div style="text-align: left;font-size: 14px;margin: 0 20px"> 장완중 <b>외 19명</b>이 좋아합니다.</div>
+                  <div style="text-align: left;font-size: 16px;margin: 0 20px"><b>IU</b> 저사진잘나왔죠</div>
+                  <div>
+                      <div style="text-align: left;font-size: 14px;margin: 0 20px"><b>장완중</b> 와 예쁘다</div>
+                      <div style="text-align: left;font-size: 14px;margin: 0 20px"><b>장완중</b> 나의 아저씨 재밌게봤습니다 ~~!</div>
+                  </div>
+
+                  <div class="mb-3">
+                      <input type="text" class="form-control" style="box-shadow: none;border:solid 1px lightgray"  placeholder="댓글 입력..">
+                  </div>
+              </div>
+
+          </div>
+          <div style="width:400px ; height:1000px; background: blue;position: fixed;left: 62%">
+              <div>내 프로필</div>
+              <div>회원님을 위한 추천 모두보기</div>
+              <div>추천인 프로필</div>
+              <div>추천인 프로필</div>
+              <div>추천인 프로필</div>
+              <div>추천인 프로필</div>
+              <div>추천인 프로필</div>
+              <div>소개 도움말 홍보센터 API</div>
+              <div>2024 인스타그램 프롬 페이스북</div>
+          </div>
+
+      </div>
   </body>
 </html>
