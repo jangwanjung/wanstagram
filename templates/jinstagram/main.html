@@ -1,100 +1,262 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <!-- google font -->
-      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100" rel="stylesheet" />
-    <title>Hello, world!</title>
-      <style>
-          .box {
-            width: 150px;
-            height: 150px;
-            border-radius: 70%;
-            overflow: hidden;
-          }
-          .profile {
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
-          }
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <!-- google font -->
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100" rel="stylesheet" />
+        <!-- jsquery -->
+        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
-      </style>
-  </head>
-  <body>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary" style="position: fixed;width: 100%;background: white">
-  <div class="container-fluid" style="justify-content: space-between ;flex-wrap: nowrap;min-width: 700px" >
+        <title>wanstagram</title>
+        <style>
+            .box {
+                width: 150px;
+                height: 150px;
+                border-radius: 70%;
+                overflow: hidden;
+            }
+            .profile {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .s1 {white-space:nowrap;}
+            .modal_overlay {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(1.5px);
+            -webkit-backdrop-filter: blur(1.5px);
+            }
+            .modal_window {
+                background: white;
+                backdrop-filter: blur(13.5px);
+                -webkit-backdrop-filter: blur(13.5px);
+                border-radius: 10px;
+                border: 1px solid rgba(255, 255, 255, 0.18);
+                width: 800px;
+                height: 600px;
+                position: relative;
+                padding: 10px;
+            }
 
-      <a class="navbar-brand" href="#"><img style="width: 100px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMaJr0B21N0SLLrMF7rpIEc51oXfIxOTe4ZQ&usqp=CAU"> </a>
-      <input class="form-control me-2" style="width: 400px" type="search" placeholder="Search" aria-label="Search">
-      <div>
-          <span class="material-symbols-outlined">home</span>
-          <span class="material-symbols-outlined">send</span>
-          <span class="material-symbols-outlined">add</span>
-          <span class="material-symbols-outlined">explore</span>
-          <span class="material-symbols-outlined">favorite</span>
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-      </div>
+        </style>
+    </head>
+    <body>
 
-    </div>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary" style="position: fixed;width: 100%;background: white">
+        <div class="container-fluid" style="justify-content: space-between ;flex-wrap: nowrap;min-width: 700px" >
+            <a class="navbar-brand" href="#"><img style="width: 100px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMaJr0B21N0SLLrMF7rpIEc51oXfIxOTe4ZQ&usqp=CAU"> </a>
+            <input class="form-control me-2" style="width: 400px" type="search" placeholder="Search" aria-label="Search">
+            <div>
+                <span class="material-symbols-outlined">home</span>
+                <span class="material-symbols-outlined">send</span>
+                <span id="nav_bar_add_box" class="material-symbols-outlined">add_box</span>
+                <span class="material-symbols-outlined">explore</span>
+                <span class="material-symbols-outlined">favorite</span>
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+            </div>
+        </div>
+        </nav>
+        <div style="display: flex ;flex-direction: row; justify-content: center ; text-align: center;padding-top:60px;background: #FAFAFA">
+            <div style="width:500px ;min-width: 500px; margin-right: 300px">
+                <!-- 여기서부터 피드박스-->
+                {% for feed in feeds %}
+                    <div style="border: solid 1px lightgray;background: white;margin-bottom: 20px">
+                    <div style="display: flex ; flex-direction: row; align-items: center ">
+                        <div class="box" style="width: 45px ; height: 45px;margin:10px">
+                            <img class="profile" src="{{ feed.profile_image}}">
+                        </div>
+                        <div>
+                            {{ feed.user_id }}
+                        </div>
+                    </div>
+                    <div>
+                        <img style="width: 100%" src="{{feed.image}}">
+                    </div>
+                    <div style="display: flex; flex-direction: row; justify-content:space-between;margin: 0 20px">
+                        <div>
+                            <span class="material-symbols-outlined">favorite</span>
+                            <span class="material-symbols-outlined">mode_comment</span>
+                            <span class="material-symbols-outlined">send</span>
+                        </div>
+                        <div>
+                            <span class="material-symbols-outlined">bookmark</span>
+                        </div>
+                    </div>
+                    <div style="text-align: left;font-size: 14px;margin: 0 20px"> 장완중 <b>외 {{ feed.like_count }}명</b>이 좋아합니다.</div>
+                    <div style="text-align: left;font-size: 16px;margin: 0 20px"><b>{{ feed.user_id }}</b> {{ feed.content }}</div>
+                    <div>
+                        <div style="text-align: left;font-size: 14px;margin: 0 20px"><b>장완중</b> 와 예쁘다</div>
+                        <div style="text-align: left;font-size: 14px;margin: 0 20px"><b>장완중</b> 나의 아저씨 재밌게봤습니다 ~~!</div>
+                    </div>
 
-  </div>
+                    <div>
+                        <input type="text" class="form-control" style="box-shadow: none;border:solid 1px lightgray"  placeholder="댓글 입력..">
+                    </div>
+                </div>
+                {% endfor %}
+                <!-- 여기까지 피드박스-->
 
-</nav>
-  <div style="display: flex ;flex-direction: row; justify-content: center ; text-align: center;padding-top:60px;background: #FAFAFA">
-          <div style="min-width: 500px;height: 1000px ; margin-right: 300px">
-              <div style="border: solid 1px lightgray;background: white">
-                  <div style="display: flex ; flex-direction: row; align-items: center ">
-                      <div class="box" style="width: 60px ; height: 60px;margin:0 20px">
+            </div>
+            <div style="width:400px ; height:1000px;position: fixed;left: 62%;background: whitesmoke">
+                <div style="display: flex ; flex-direction: row; align-items: center ">
+                    <div class="box" style="width: 70px ; height: 70px;margin:20px">
                         <img class="profile" src="https://i.namu.wiki/i/TYxKQDnuwFOcxdSaPR-L81SPQGf5aPEz13tINJ-Z508LKNtGmRmkZTKKEN82SrIZAYoLL8WSbXGzv2PiLgpRSg.webp">
-                      </div>
-                      <div>
-                          IU
-                      </div>
-                  </div>
+                    </div>
+                    <div style="text-align: left">
+                        <div style="font-weight: bold">
+                            장완중
+                        </div>
+                        <div style="color: gray">
+                            jangwanjung
 
-                  <div>
-                      <img style="width: 100%" src="https://file3.instiz.net/data/file3/2021/05/31/d/d/b/ddbc79bb11d67f68b0b269c2fefa4771.png">
-                  </div>
-                  <div style="display: flex; flex-direction: row; justify-content:space-between;margin: 0 20px">
-                      <div>
-                          <span class="material-symbols-outlined">favorite</span>
-                          <span class="material-symbols-outlined">mode_comment</span>
-                          <span class="material-symbols-outlined">send</span>
-                      </div>
-                      <div>
-                          <span class="material-symbols-outlined">bookmark</span>
-                      </div>
-                  </div>
-                  <div style="text-align: left;font-size: 14px;margin: 0 20px"> 장완중 <b>외 19명</b>이 좋아합니다.</div>
-                  <div style="text-align: left;font-size: 16px;margin: 0 20px"><b>IU</b> 저사진잘나왔죠</div>
-                  <div>
-                      <div style="text-align: left;font-size: 14px;margin: 0 20px"><b>장완중</b> 와 예쁘다</div>
-                      <div style="text-align: left;font-size: 14px;margin: 0 20px"><b>장완중</b> 나의 아저씨 재밌게봤습니다 ~~!</div>
-                  </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex ; flex-direction: row ; justify-content: space-between;margin-bottom: 10px">
+                    <div style="font-weight: bold ;color: gray">
+                        회원님을 위한 추천
+                    </div>
+                    <div>
+                        <a href="#" style="font-weight: bold ;text-decoration: none;color: black">모두보기</a>
+                    </div>
+                </div>
+                <div class="s1" style="display: flex ; flex-direction: row; align-items: center ;justify-content: space-between;margin-bottom: 10px">
+                    <div style="display: flex ; flex-direction: row">
+                        <div class="box" style="width: 35px ; height: 35px">
+                        <img class="profile"
+                             src="https://i.namu.wiki/i/TYxKQDnuwFOcxdSaPR-L81SPQGf5aPEz13tINJ-Z508LKNtGmRmkZTKKEN82SrIZAYoLL8WSbXGzv2PiLgpRSg.webp">
+                    </div>
+                        <div style="text-align: left;margin-left:10px">
+                            <div style="font-weight: bold;font-size: 14px">
+                                AAAAAAAA
+                            </div>
+                            <div style="color: gray;font-size: 14px">
+                                jangwanjung님 외 31명이 팔로우합니다
+                            </div>
+                        </div>
 
-                  <div class="mb-3">
-                      <input type="text" class="form-control" style="box-shadow: none;border:solid 1px lightgray"  placeholder="댓글 입력..">
-                  </div>
-              </div>
+                    </div>
 
-          </div>
-          <div style="width:400px ; height:1000px; background: blue;position: fixed;left: 62%">
-              <div>내 프로필</div>
-              <div>회원님을 위한 추천 모두보기</div>
-              <div>추천인 프로필</div>
-              <div>추천인 프로필</div>
-              <div>추천인 프로필</div>
-              <div>추천인 프로필</div>
-              <div>추천인 프로필</div>
-              <div>소개 도움말 홍보센터 API</div>
-              <div>2024 인스타그램 프롬 페이스북</div>
-          </div>
+                    <div style="display: flex">
+                        <a href="#" style="text-decoration: none; font-weight: bold ;color: dodgerblue;font-size: 14px">팔로우</a>
+                    </div>
+                </div>
+                <div class="s1" style="display: flex ; flex-direction: row; align-items: center ;justify-content: space-between;margin-bottom: 10px">
+                    <div style="display: flex ; flex-direction: row">
+                        <div class="box" style="width: 35px ; height: 35px">
+                        <img class="profile"
+                             src="https://i.namu.wiki/i/TYxKQDnuwFOcxdSaPR-L81SPQGf5aPEz13tINJ-Z508LKNtGmRmkZTKKEN82SrIZAYoLL8WSbXGzv2PiLgpRSg.webp">
+                    </div>
+                        <div style="text-align: left;margin-left:10px">
+                            <div style="font-weight: bold;font-size: 14px">
+                                AAAAAAAA
+                            </div>
+                            <div style="color: gray;font-size: 14px">
+                                jangwanjung님 외 31명이 팔로우합니다
+                            </div>
+                        </div>
 
-      </div>
-  </body>
+                    </div>
+
+                    <div style="display: flex">
+                        <a href="#" style="text-decoration: none; font-weight: bold ;color: dodgerblue;font-size: 14px">팔로우</a>
+                    </div>
+                </div>
+                <div class="s1" style="display: flex ; flex-direction: row; align-items: center ;justify-content: space-between;margin-bottom: 10px">
+                    <div style="display: flex ; flex-direction: row">
+                        <div class="box" style="width: 35px ; height: 35px">
+                        <img class="profile"
+                             src="https://i.namu.wiki/i/TYxKQDnuwFOcxdSaPR-L81SPQGf5aPEz13tINJ-Z508LKNtGmRmkZTKKEN82SrIZAYoLL8WSbXGzv2PiLgpRSg.webp">
+                    </div>
+                        <div style="text-align: left;margin-left:10px">
+                            <div style="font-weight: bold;font-size: 14px">
+                                AAAAAAAA
+                            </div>
+                            <div style="color: gray;font-size: 14px">
+                                jangwanjung님 외 31명이 팔로우합니다
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div style="display: flex">
+                        <a href="#" style="text-decoration: none; font-weight: bold ;color: dodgerblue;font-size: 14px">팔로우</a>
+                    </div>
+                </div>
+                <div class="s1" style="display: flex ; flex-direction: row; align-items: center ;justify-content: space-between;margin-bottom: 10px">
+                    <div style="display: flex ; flex-direction: row">
+                        <div class="box" style="width: 35px ; height: 35px">
+                        <img class="profile"
+                             src="https://i.namu.wiki/i/TYxKQDnuwFOcxdSaPR-L81SPQGf5aPEz13tINJ-Z508LKNtGmRmkZTKKEN82SrIZAYoLL8WSbXGzv2PiLgpRSg.webp">
+                    </div>
+                        <div style="text-align: left;margin-left:10px">
+                            <div style="font-weight: bold;font-size: 14px">
+                                AAAAAAAA
+                            </div>
+                            <div style="color: gray;font-size: 14px">
+                                jangwanjung님 외 31명이 팔로우합니다
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div style="display: flex">
+                        <a href="#" style="text-decoration: none; font-weight: bold ;color: dodgerblue;font-size: 14px">팔로우</a>
+                    </div>
+                </div>
+                <div class="s1" style="display: flex ; flex-direction: row; align-items: center ;justify-content: space-between;margin-bottom: 10px">
+                    <div style="display: flex ; flex-direction: row">
+                        <div class="box" style="width: 35px ; height: 35px">
+                        <img class="profile"
+                             src="https://i.namu.wiki/i/TYxKQDnuwFOcxdSaPR-L81SPQGf5aPEz13tINJ-Z508LKNtGmRmkZTKKEN82SrIZAYoLL8WSbXGzv2PiLgpRSg.webp">
+                    </div>
+                        <div style="text-align: left;margin-left:10px">
+                            <div style="font-weight: bold;font-size: 14px">
+                                AAAAAAAA
+                            </div>
+                            <div style="color: gray;font-size: 14px">
+                                jangwanjung님 외 31명이 팔로우합니다
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div style="display: flex">
+                        <a href="#" style="text-decoration: none; font-weight: bold ;color: dodgerblue;font-size: 14px">팔로우</a>
+                    </div>
+                </div>
+                <div style="text-align: left;font-size: 12px;margin-top: 30px;color: silver">
+                    소개·도움말·홍보센터·API·채용정보<br>개인정보처리방침·약관·위치·인기계정·해시태그·언어
+                </div>
+                <div style="text-align: left;font-size: 12px;margin-top: 20px;color: silver">
+                    ⓒ 2021 INSTAGRAM FROM FACEBOOK
+                </div>
+            </div>
+
+        </div>
+        <div class="modal_overlay">
+            <div class="modal_window">
+            </div>
+        </div>
+        <script>
+            $('#nav_bar_add_box').click(function (){
+                alert("add_box를 눌렀습니다")
+            })
+        </script>
+
+    </body>
 </html>
