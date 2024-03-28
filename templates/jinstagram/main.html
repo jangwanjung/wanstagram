@@ -52,6 +52,8 @@
                 padding: 10px;
             }
 
+
+
         </style>
     </head>
     <body>
@@ -248,14 +250,119 @@
             </div>
 
         </div>
-        <div class="modal_overlay">
+        <!-- 첫번째 모달창 -->
+        <div class="modal_overlay" id="first_modal">
             <div class="modal_window">
+                <div style="display: flex;flex-direction: row;justify-content: space-between">
+                    <div style="width: 40px;background: gray">
+
+                    </div>
+                    <div>
+                        새 이미지 업로드
+                    </div>
+                    <div style="width: 40px;background: gray">
+                        <span class="material-symbols-outlined">close</span>
+                    </div>
+                </div>
+                <div class="img_upload_space" style="width: 778px;height: 540px;background: orange;margin-top: 10px">
+
+
+                </div>
+            </div>
+        </div>
+        <!-- 두번째 모달창 -->
+        <div class="modal_overlay" id="second_modal">
+            <div class="modal_window">
+                <div style="display: flex;flex-direction: row;justify-content: space-between">
+                    <div style="width: 40px;background: gray">
+
+                    </div>
+                    <div>
+                        새 이미지 업로드
+                    </div>
+                    <div style="width: 40px;background: gray">
+                        <span class="material-symbols-outlined">close</span>
+                    </div>
+                </div>
+                <div style="display: flex;flex-direction: row">
+                    <div class="img_upload_space" style="width: 500px;height: 540px;background: orange;margin-top: 10px">
+
+                    </div>
+                    <div>
+                        글자 입력하는곳
+                    </div>
+                </div>
+
             </div>
         </div>
         <script>
             $('#nav_bar_add_box').click(function (){
-                alert("add_box를 눌렀습니다")
+                $('#first_modal').css({
+                    display : 'flex'
+                })
+                $(document.body).css({
+                    overflow:'hidden'
+                })
             })
+
+            $('.img_upload_space')
+              .on("dragover", dragOver)
+              .on("dragleave", dragOver)
+              .on("drop", uploadFiles);
+
+            function dragOver(e){
+                e.stopPropagation();
+                e.preventDefault();
+                    if (e.type == "dragover") {
+                        $(e.target).css({
+                        "background-color": "black",
+                        "outline-offset": "-20px"
+                        });
+                    }
+                    else {
+                        $(e.target).css({
+                        "background-color": "gray",
+                        "outline-offset": "-10px"
+                        });
+                    }
+            }
+
+            function uploadFiles(e){
+                e.stopPropagation();
+                e.preventDefault();
+
+
+                e.dataTransfer = e.originalEvent.dataTransfer; //2
+                var files = e.target.files || e.dataTransfer.files;
+
+                if (files.length > 1) {
+                    alert('하나만 올려라.');
+                    return;
+                }
+
+                if (files[0].type.match(/image.*/)) {
+
+                    $('#first_modal').css({
+                        display : 'none'
+                    })
+
+                    $('#second_modal').css({
+                        display : 'flex'
+                    })
+
+                    $(e.target).css({
+                        "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
+                        "outline": "none",
+                        "background-size": "100% 100%"
+                });
+                }else{
+                    alert('이미지가 아닙니다.');
+                    return;
+                }
+            }
+
+
+
         </script>
 
     </body>
