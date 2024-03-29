@@ -253,7 +253,7 @@
         <!-- 첫번째 모달창 -->
         <div class="modal_overlay" id="first_modal">
             <div class="modal_window">
-                <div style="display: flex;flex-direction: row;justify-content: space-between">
+                <div style="display: flex;flex-direction: row;justify-content: space-between ;border-bottom: solid gray 1px">
                     <div style="width: 40px;background: gray">
 
                     </div>
@@ -264,7 +264,7 @@
                         <span class="material-symbols-outlined">close</span>
                     </div>
                 </div>
-                <div class="img_upload_space" style="width: 778px;height: 540px;background: orange;margin-top: 10px">
+                <div class="img_upload_space" style="width: 778px;height: 540px;margin-top: 10px">
 
 
                 </div>
@@ -273,7 +273,7 @@
         <!-- 두번째 모달창 -->
         <div class="modal_overlay" id="second_modal">
             <div class="modal_window">
-                <div style="display: flex;flex-direction: row;justify-content: space-between">
+                <div style="display: flex;flex-direction: row;justify-content: space-between;border-bottom: solid gray 1px">
                     <div style="width: 40px;background: gray">
 
                     </div>
@@ -285,17 +285,26 @@
                     </div>
                 </div>
                 <div style="display: flex;flex-direction: row">
-                    <div class="img_upload_space" style="width: 500px;height: 540px;background: orange;margin-top: 10px">
+                    <div class="img_upload_space" style="width: 500px;height: 540px;margin-top: 10px">
 
                     </div>
-                    <div>
-                        글자 입력하는곳
+                    <div style="border-left: solid gray 1px">
+                        <div>
+                            <textarea id="input_feed_content" style="height: 400px;width: 300px" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+
+                        <div>
+                            <button id="feed_create_butten" type="butten" class="btn btn-primary" style="width:100%">
+                                공유하기
+                            </button>
+                        </div>
                     </div>
                 </div>
 
             </div>
         </div>
         <script>
+            let files
             $('#nav_bar_add_box').click(function (){
                 $('#first_modal').css({
                     display : 'flex'
@@ -333,7 +342,7 @@
 
 
                 e.dataTransfer = e.originalEvent.dataTransfer; //2
-                var files = e.target.files || e.dataTransfer.files;
+                files = e.target.files || e.dataTransfer.files;
 
                 if (files.length > 1) {
                     alert('하나만 올려라.');
@@ -350,16 +359,26 @@
                         display : 'flex'
                     })
 
-                    $(e.target).css({
+                    $('.img_upload_space').css({
                         "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
                         "outline": "none",
-                        "background-size": "100% 100%"
+                        "background-size": "contain",
+                        "background-repeat":"no-repeat",
+                        "background-position":"center"
                 });
                 }else{
                     alert('이미지가 아닙니다.');
                     return;
                 }
             }
+            $('#feed_create_butten').click(function (){
+
+                let file = files;
+                let image = files[0].name;
+                let content = $('#input_feed_content').val();
+                let user_id = "장완중";
+                let profile_image = "https://i.namu.wiki/i/TYxKQDnuwFOcxdSaPR-L81SPQGf5aPEz13tINJ-Z508LKNtGmRmkZTKKEN82SrIZAYoLL8WSbXGzv2PiLgpRSg.webp";
+            })
 
 
 
