@@ -372,12 +372,38 @@
                 }
             }
             $('#feed_create_butten').click(function (){
-
+                alert("공유하기를 눌렀다")
                 let file = files;
                 let image = files[0].name;
                 let content = $('#input_feed_content').val();
                 let user_id = "장완중";
                 let profile_image = "https://i.namu.wiki/i/TYxKQDnuwFOcxdSaPR-L81SPQGf5aPEz13tINJ-Z508LKNtGmRmkZTKKEN82SrIZAYoLL8WSbXGzv2PiLgpRSg.webp";
+                let fd=new FormData();
+                fd.append("file",file)
+                fd.append("image",image)
+                fd.append("content",content)
+                fd.append("user_id",user_id)
+                fd.append("profile_image",profile_image)
+
+                $.ajax({
+                    url:"/content/upload",
+                    date: fd,
+                    method:"POST",
+                    processData:false,
+                    contentType:false,
+                    success:function (date){
+                        console.log("성공")
+                    },
+                    error:function (request,status,error) {
+                        console.log("에러")
+                    },
+                    complete:function (){
+                        console.log("완료")
+                    }
+                })
+
+
+
             })
 
 
